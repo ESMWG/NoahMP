@@ -53,13 +53,9 @@ If user compiles the model successfully, the executable file `noahmp.exe` is cre
 
 The NoahMP model use a namelist called `noahmp.namelist` as well as some additional parameter files (.TBL files) that are located under the "run" directory. Users need to copy those files to the directory where the model is going to be executed.
 
-For a NoahMP cold start run (i.e. not from a restart file), the user needs to provide three 
-additional files that are specified in the "hydro.namelist": "GEO_STATIC_FLNM", "GEO_FINEGRID_FLNM" 
-and, depending on whether or not the baseflow-bucket model is activated, "gwbasmskfil".
+For a NoahMP cold start run (i.e. not from a restart file), the user needs to turn off the flat `from_restart=.false.` in `noahmp.namelist` and provide an initialization file that is specified in the `noahmp.namelist`: `INIT_FILE`.
 
-For running NoahMP from restart file, the user needs to uncomment RESTART_FILE_REQUESTED from 
-`noahmp.namelist` by removing "!" and provide the exact name for the existing restart file 
-to be used.  Running from a restart condition is common when the land surface has been 
+For running NoahMP from restart file, the user needs to turn on the flag `from_restart=.true.` in `noahmp.namelist` and provide an existing restart file to the option `RESTART_FILE`. Running from a restart condition is common when the land surface has been 
 'spun-up' by running NoahMP in an offline or 'uncoupled' capacity.
 
 ## Debugging
