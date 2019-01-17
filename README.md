@@ -98,3 +98,7 @@ The basic steps to do so are as follows:
 5) make
 
 If there is no error, then users can compile  NoahMP on the new platform.
+
+## Contribution
+
+Fork this repository, code, and pull
