@@ -12,15 +12,17 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. namelist
+1. logs or outputs
 
-2. the domain file headers
+2. namelist
 
-3. the input file headers
+3. the domain file headers
 
-4. the restart file headers
+4. the input file headers
 
-5. parameter tables
+5. the restart file headers
+
+6. parameter tables
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
