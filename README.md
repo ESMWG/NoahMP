@@ -39,7 +39,7 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 ./configure
 ```
 
-Select according to your operation system (Linux, Mac OS X Darwin) and the parrallel preferences (sequential or parallel).
+Select according to your operation system (Linux, Mac OS X Darwin) and the parallel preferences (sequential or parallel).
 
 ### Compiling
 
