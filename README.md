@@ -102,3 +102,5 @@ If there is no error, then users can compile  NoahMP on the new platform.
 ## Contribution
 
 Fork this repository, code, and submit a pull request.
+
+Read the GitHub help page [https://help.github.com/articles/fork-a-repo] for more information.
