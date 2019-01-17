@@ -13,16 +13,27 @@ A clear and concise description of what the bug is.
 **To Reproduce**
 Steps to reproduce the behavior:
 1. logs or outputs
-
+```
+terminal outputs
+```
 2. namelist
-
+```
+noahmp.namelist
+```
 3. the domain file headers
-
-4. the input file headers
-
-5. the restart file headers
-
+```
+ncdump -h domain.nc
+```
+4. the initialization or restart file headers
+```
+ncdump -h init.nc or ncdump -h restart.nc
+```
+5. the input file headers
+```
+ncdump -h input.20000101T000000
+```
 6. parameter tables
+default or enter your update here
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
