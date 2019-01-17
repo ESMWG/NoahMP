@@ -83,7 +83,7 @@ Edit "`makefile.in`", and append the compiler debug options "`-g`" to the fortra
 
 ## Example
 
-An example presenting the namelist, domain, input, restart files is located in [https://github.com/esmwg/NoahMP-Training].
+An example presenting the namelist, domain, input, restart files can be found in [https://github.com/esmwg/NoahMP-Training].
 
 ## Porting
 
