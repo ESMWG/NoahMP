@@ -81,6 +81,10 @@ during run-time.
 
 Edit "`makefile.in`", and append the compiler debug options "`-g`" to the fortran compiler "`F90`".
 
+## Example
+
+An example presenting the namelist, domain, input, restart files is located in [https://github.com/esmwg/NoahMP-Training].
+
 ## Porting
 
 The NoahMP model does not presently support OpenMP. The default support platform is Linux 
