@@ -3,25 +3,26 @@
 This readme file describes the building and running processes of the NoahMP land surface model.
 
 ## Building
-To build the NoahMP land surface model, users needs to set environment variables, and then follow the configuring and compiling processes.
+To build the NoahMP land surface model, users need to set environment variables, and then configure and compile the model as follows.
 
 ### Environmental variables
 
 Environmental variables are used to specify the NetCDF installation path.
 
-You can explicitly set the "`NETCDF_INC`" and "`NETCDF_LIB`" environment variables or just set "`NETCDF`".  
-If you only set "`NETCDF`" environment variable, the default `NETCDF_INC` and `NETCDF_LIB` inside NoahMP
-will be "`$NETCDF/include`" and "`$NETCDF/lib`".
-
+You can only set the `NETCDF` environment variable:
 ```bash
-export NETCDF_INC=$your_netcdf_path/include
-export NETCDF_LIB=$your_netcdf_path/lib
+export NETCDF=$your_netcdf_installation_directory
+```
+In this case, the NetCDF develoment header files and runtime libraries will be assumed under "`$NETCDF/include`" and "`$NETCDF/lib`", respectively.
+
+If these settings do not match your configurations, you have to specify  the NetCDF include and library pathes separately:
+```bash
+export NETCDF_INC=$your_netcdf_include_directory
+export NETCDF_LIB=$your_netcdf_library_directory
 ```
 
-"NETCDF_INC" and "NETCDF_LIB" are defined for the NoahMP only and can be different from those 
-set for the WRF model. NoahMP has two netcdf libraries for Fortran and C respectively: 
-`libnetcdff` and `libnetcdf`. If the user's NetCDF library combined them together (only has one), 
-the user will need to manually change this part in order to successfully compile NoahMP. 
+NoahMP uses two NetCDF libraries for Fortran and C respectively: 
+`libnetcdff` and `libnetcdf`. Make sure that these two files are in your NetCDF library path. If the user's NetCDF library combined them together (only has one), the user will need to manually change this part in order to successfully compile NoahMP. 
 See the section below on porting about how to change this.
 
 Notes: If you are going to create model output file that is more than 2Gb,
@@ -35,31 +36,30 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 
 ### Configuring
 
+Run the configuration script to configure the compiling:
 ```bash
 ./configure
 ```
+Several options will be prompted. Select the one that match your operating system (Linux, Mac OS X Darwin), compiler (GCC/Gfortran, Intel, PGI), and intended parallel environment (seq for sequential and dm for MPI).
 
-Select according to your operation system (Linux, Mac OS X Darwin) and the parallel preferences (sequential or parallel).
+After the configuration, a file named `makefile.in` will be generated in the source code directory, specifying the detailed compiling settings. Modify if necessary.
 
 ### Compiling
 
+Run `make` to start the compilation:
 ```bash
 make
 ``` 
 
-If user compiles the model successfully, the executable file `noahmp.exe` is created under "run" directory.
+If compiled successfully, an executable file named `noahmp.exe` will be created under "run" directory.
 
 ## Running
 
-The NoahMP model use a namelist called `noahmp.namelist` as well as some additional parameter files (.TBL files) that are located under the "run" directory. Users need to copy those files to the directory where the model is going to be executed.
+The NoahMP model use a namelist called `noahmp.namelist` as well as some additional parameter files (.TBL files), which are located under the "run" directory. Users need to copy those files to the directory where the model is going to be executed.
 
-For a NoahMP cold start run (i.e. not from a restart file), the user needs to provide three 
-additional files that are specified in the "hydro.namelist": "GEO_STATIC_FLNM", "GEO_FINEGRID_FLNM" 
-and, depending on whether or not the baseflow-bucket model is activated, "gwbasmskfil".
+For a NoahMP cold start run (i.e. not from a restart file), the user needs to turn off the flag `from_restart=.false.` in `noahmp.namelist` and provide an initialization file to the `INIT_FILE` option.
 
-For running NoahMP from restart file, the user needs to uncomment RESTART_FILE_REQUESTED from 
-`noahmp.namelist` by removing "!" and provide the exact name for the existing restart file 
-to be used.  Running from a restart condition is common when the land surface has been 
+For running NoahMP from restart file, the user needs to switch on the flag `from_restart=.true.` in `noahmp.namelist` and provide an existing restart file to the option `RESTART_FILE`. Running from a restart condition is common when the land surface has been 
 'spun-up' by running NoahMP in an offline or 'uncoupled' capacity.
 
 ## Debugging
