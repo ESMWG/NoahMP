@@ -1,0 +1,11 @@
+RM = rm -f 
+RMD = rm -rf 
+CPP = cpp -C -P -traditional
+CPPFLAGS = $(HYDRO_D) $(WRFIO_NCD_LARGE_FILE_SUPPORT)
+MPPFLAGS = -DMPP_LAND
+F90 = mpif90
+F90FLAGS = -w -free -ftz -align all -fno-alias -fp-model precise
+MODFLAG = 
+LDFLAGS =
+LIBS =
+ARFLAGS = cr

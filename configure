@@ -1,0 +1,110 @@
+#!/bin/bash
+
+MAKEFILEIN='makefile.in'
+MAKEFILEIN_NCD=`mktemp makefile.in.ncd.XXXXX`
+MAKEFILEIN_SYS=`mktemp makefile.in.sys.XXXXX`
+MAKEFILEIN_ARC=`mktemp makefile.in.arc.XXXXX`
+
+finish () {
+    rm -f $MAKEFILEIN_NCD
+    rm -f $MAKEFILEIN_SYS
+    rm -f $MAKEFILEIN_ARC
+    exit 0
+}
+
+trap finish EXIT
+
+# Configure NetCDF
+echo "" > $MAKEFILEIN_NCD
+if [ -n "$NETCDF_INC" ] ; then
+    ncincstr="-I$NETCDF_INC"
+elif [ -n "$NETCDF" ] ; then
+    ncincstr="-I$NETCDF/include"
+else
+    ncincstr=`nc-config --fflags 2>/dev/null`
+    if [ -z "$ncincstr" ] ; then
+        ncincstr='-I'`pkg-config netcdf-fortran --variable=includedir`
+    fi
+fi
+if [ -n "$ncincstr" ] ; then
+    echo 'NETCDFINC = '"$ncincstr" >> $MAKEFILEIN_NCD
+else
+    echo "ERROR in NETCDFINC"
+fi
+
+if [ -n "$NETCDF_LIB" ] ; then
+    nclibstr="-L$NETCDF_LIB"
+elif [ -n "$NETCDF" ] ; then
+    nclibstr="-L$NETCDF/lib"
+else
+    nclibstr=`nc-config --flibs 2>/dev/null | sed 's/-lnetcdff//g' | sed 's/-lnetcdf//g'`
+    if [ -z "$nclibstr" ] ; then
+        nclibstr='-L'`pkg-config netcdf-fortran --variable=libdir`
+    fi
+fi
+if [ -n "$nclibstr" ] ; then
+    echo 'NETCDFLIB = '"$nclibstr -lnetcdff -lnetcdf" >> $MAKEFILEIN_NCD
+else
+    echo "ERROR in NETCDFLIB"
+fi
+
+cat $MAKEFILEIN_NCD
+echo ""
+
+# Configure System
+echo "" > $MAKEFILEIN_SYS
+
+if [ -n "$WRF_HYDRO" ] && [ "$WRF_HYDRO" -ne "0" ] ; then
+    wrfhydrostr='-DWRF_HYDRO'
+elif [ -n "$WRF_HYDRO_RAPID" ] && [ "$WRF_HYDRO_RAPID" -ne "0" ] ; then
+    wrfhydrostr='-DWRF_HYDRO -DWRF_HYDRO_RAPID'
+else
+    wrfhydrostr=''
+fi
+echo 'WRF_HYDRO = '"$wrfhydrostr" >> $MAKEFILEIN_SYS
+
+if [ -n "$HYDRO_D" ] && [ "$HYDRO_D" -ne "0" ] ; then
+    hydrodstr='-DHYDRO_D $(WRF_HYDRO)'
+else
+    hydrodstr='$(WRF_HYDRO)'
+fi
+echo 'HYDRO_D = '"$hydrodstr" >> $MAKEFILEIN_SYS
+
+if [ -n "$WRFIO_NCD_LARGE_FILE_SUPPORT" ] && [ "$WRFIO_NCD_LARGE_FILE_SUPPORT" -eq 1 ] ; then
+    largefilestr='-DWRFIO_NCD_LARGE_FILE_SUPPORT'
+else
+    largefilestr=''
+fi
+echo 'WRFIO_NCD_LARGE_FILE_SUPPORT = '"$largefilestr" >> $MAKEFILEIN_SYS
+
+# Compiling Options
+echo "Please select from following supported options."
+echo "   1. Linux GCC seq"
+echo "   2. Linux GCC dmpar"
+echo "   3. Linux Intel seq"
+echo "   4. Linux Intel dmpar"
+echo "  21. Darwin GCC seq"
+echo "  22. Darwin GCC seq"
+echo "   0. exit only"
+echo ""
+
+echo -n "Enter selection: "
+read option
+
+# Compiling Configurations
+case $option in
+    1 ) cp arch/makefile.in.linux.seq.gcc $MAKEFILEIN_ARC ;;
+    2 ) cp arch/makefile.in.linux.mpp.gcc $MAKEFILEIN_ARC ;;
+    3 ) cp arch/makefile.in.linux.seq.intel $MAKEFILEIN_ARC ;;
+    4 ) cp arch/makefile.in.linux.mpp.intel $MAKEFILEIN_ARC ;;
+    5 ) cp arch/makefile.in.linux.seq.pgi $MAKEFILEIN_ARC ;;
+    6 ) cp arch/makefile.in.linux.mpp.pgi $MAKEFILEIN_ARC ;;
+    11 ) cp arch/makefile.in.ibm.seq.xlf90_r $MAKEFILEIN_ARC ;;
+    12 ) cp arch/makefile.in.ibm.mpp.xlf90_r $MAKEFILEIN_ARC ;;
+    21 ) cp arch/makefile.in.darwin.seq.gcc $MAKEFILEIN_ARC ;;
+    22 ) cp arch/makefile.in.darwin.mpp.gcc $MAKEFILEIN_ARC ;;
+    0 ) exit ;;
+    * ) echo 'ERROR: Unknown option!' ; exit 1 ;;
+esac
+
+cat $MAKEFILEIN_NCD $MAKEFILEIN_SYS $MAKEFILEIN_ARC > $MAKEFILEIN

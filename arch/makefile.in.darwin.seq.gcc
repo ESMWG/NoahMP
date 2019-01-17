@@ -1,0 +1,10 @@
+RM = rm -f 
+RMD = rm -rf 
+CPP = cpp -C -P -traditional
+CPPFLAGS = $(HYDRO_D) $(WRFIO_NCD_LARGE_FILE_SUPPORT)
+MPPFLAGS =
+F90 = gfortran 
+F90FLAGS = -w -ffree-form -ffree-line-length-none -frecord-marker=4
+MODFLAG = 
+LDFLAGS =
+LIBS =
