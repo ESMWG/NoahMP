@@ -15,14 +15,14 @@ export NETCDF=$your_netcdf_installation_directory
 ```
 In this case, the NetCDF develoment header files and runtime libraries will be assumed under "`$NETCDF/include`" and "`$NETCDF/lib`", respectively.
 
-If these settings do not match your configurations, you have to specify  the NetCDF include and library pathes separately:
+If these settings do not match your configurations, you have to specify  the NetCDF include and library pathes separately using two environmental variables `NETCDF_INC` and `NETCDF_LIB`:
 ```bash
 export NETCDF_INC=$your_netcdf_include_directory
 export NETCDF_LIB=$your_netcdf_library_directory
 ```
 
 NoahMP uses two NetCDF libraries for Fortran and C respectively: 
-`libnetcdff` and `libnetcdf`. Make sure that these two files are in your NetCDF library path. If the user's NetCDF library combined them together (only has one), the user will need to manually change this part in order to successfully compile NoahMP. 
+`libnetcdff` and `libnetcdf`. Make sure that the two files are all in your NetCDF library path. If the user's NetCDF library combined them together (only has one), the user will need to manually change this part in order to successfully compile NoahMP. 
 See the section below on porting about how to change this.
 
 Notes: If you are going to create model output file that is more than 2Gb,
@@ -36,11 +36,11 @@ export WRFIO_NCD_LARGE_FILE_SUPPORT=1
 
 ### Configuring
 
-Run the configuration script to configure the compiling:
+Run the configuration script to configure the compilation:
 ```bash
 ./configure
 ```
-Several options will be prompted. Select the one that match your operating system (Linux, Mac OS X Darwin), compiler (GCC/Gfortran, Intel, PGI), and intended parallel environment (seq for sequential and dm for MPI).
+Several options will be prompted. Select the one that matches your operating system (Linux, Mac OS X Darwin), compiler (GCC/Gfortran, Intel, PGI), and parallel environment (seq for sequential and dm for MPI).
 
 After the configuration, a file named `makefile.in` will be generated in the source code directory, specifying the detailed compiling settings. Modify if necessary.
 
@@ -51,7 +51,7 @@ Run `make` to start the compilation:
 make
 ``` 
 
-If compiled successfully, an executable file named `noahmp.exe` will be created under "run" directory.
+If compiled successfully, an executable file named `noahmp.exe` will be created under the "run" directory.
 
 ## Running
 
@@ -83,7 +83,7 @@ Edit "`makefile.in`", and append the compiler debug options "`-g`" to the fortra
 
 ## Example
 
-An example presenting the namelist, domain, input, restart files can be found in [https://github.com/esmwg/NoahMP-Training].
+An example can be found in [https://github.com/esmwg/NoahMP-Training], helping you run your first NoahMP simulation. Use the namelist, domain, input, restart files as an template for you own simulations.
 
 ## Porting
 
