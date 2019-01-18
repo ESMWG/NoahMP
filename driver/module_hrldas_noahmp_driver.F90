@@ -260,11 +260,9 @@ contains
        SNOW      =  undefined_real
        SNOWH     =  undefined_real
 
-       print *, 'DEBUG - 1'
        call hrldas_init_read(config%init_file, xstart, xend, ystart, yend, &
             config%nsoil, SMOIS, TSLB, &
             CANWAT, TSK, SNOW, SNOWH, FNDSNOWH)
-       print *, 'DEBUG - 2'
        SNOW = SNOW * 1000. ! Convert snow water equivalent to mm.
 
        VEGFRA = undefined_real
