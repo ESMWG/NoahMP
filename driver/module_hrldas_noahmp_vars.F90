@@ -466,7 +466,7 @@ contains
     implicit none
     integer :: i
     integer :: j
-    
+
     i = xstart
     j = ystart
 
@@ -596,7 +596,7 @@ contains
     print *, 'TERRAIN = ', TERRAIN(i,j)
     print *, 'GVFMIN = ', GVFMIN(i,j)
     print *, 'GVFMAX = ', GVFMAX(i,j)
-  
+
     print *, 'DEBUG - END'
   end subroutine hrldas_noahmp_vars_probe
 

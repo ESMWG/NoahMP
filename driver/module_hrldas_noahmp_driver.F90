@@ -269,11 +269,11 @@ contains
        LAI    = undefined_real
        GVFMIN = undefined_real
        SHDMAX = undefined_real
-      !  call hrldas_parm_veg_read(inflnm, xstart, xend, ystart, yend, &
-      !       OLDDATE, IVGTYP, VEGFRA, LAI, GVFMIN, SHDMAX)
-      !  VEGFRA = VEGFRA * 100.
-      !  GVFMIN = GVFMIN * 100.
-      !  SHDMAX = SHDMAX * 100.
+       !  call hrldas_parm_veg_read(inflnm, xstart, xend, ystart, yend, &
+       !       OLDDATE, IVGTYP, VEGFRA, LAI, GVFMIN, SHDMAX)
+       !  VEGFRA = VEGFRA * 100.
+       !  GVFMIN = GVFMIN * 100.
+       !  SHDMAX = SHDMAX * 100.
 
        allocate(CHSTARXY(xstart:xend,ystart:yend)) ! for consistency with MP_init; delete later
        CHSTARXY = undefined_real
@@ -295,16 +295,6 @@ contains
             wtddt, stepwtd, real(config%model_timestep), qrfsxy, qspringsxy, qslatxy, &
             fdepthxy, terrain, riverbedxy, eqzwt, rivercondxy, pexpxy &
             )
-
-       ! Initial guess only.  EAH gets updated in SFLX for later time steps.
-       EAHXY = (P8W(:,1,:)*QV_CURR(:,1,:))/(0.622+QV_CURR(:,1,:))
-
-       ! TAH: Canopy air temperature (K)
-       ! Initial guess only. TAH gets updated in SFLX for later time steps.
-       TAHXY = T_PHY(:,1,:)
-
-       CHXY = 0.1
-       CMXY = 0.1
 
        TAUSSXY = 0.0   ! Need to be added to _INIT later
     endif
@@ -380,6 +370,18 @@ contains
 
     ! Timing information for SFLX:
     call system_clock(count=count_before_sflx, count_rate=clock_rate)
+
+    if (itime == 1 .and. .not. config%from_restart) then
+       ! Initial guess only.  EAH gets updated in SFLX for later time steps.
+       EAHXY = (P8W(:,1,:)*QV_CURR(:,1,:))/(0.622+QV_CURR(:,1,:))
+
+       ! TAH: Canopy air temperature (K)
+       ! Initial guess only. TAH gets updated in SFLX for later time steps.
+       TAHXY = T_PHY(:,1,:)
+
+       CHXY = 0.1
+       CMXY = 0.1
+    endif
 
     call noahmplsm(ITIMESTEP, YR, JULIAN_IN, COSZEN, lat2d, &
          DZ8W, real(config%model_timestep), DZS, config%nsoil, DX, &
