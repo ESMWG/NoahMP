@@ -794,7 +794,7 @@ contains
        stop
     endif
 
-    call netcdf_get(ncid, 'SMOIS', stc, units, xstart, xend, ystart, yend, FATAL, ierr)
+    call netcdf_get(ncid, 'SMOIS', smc, units, xstart, xend, ystart, yend, FATAL, ierr)
     if (ierr /= NF90_NOERR) then
        write(*,*) 'ERROR[HRLDAS_INIT_READ]: Problem reading SMOIS'
        stop
