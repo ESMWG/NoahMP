@@ -83,7 +83,9 @@ Edit "`makefile.in`", and append the compiler debug options "`-g`" to the fortra
 
 ## Example
 
-An example can be found in [https://github.com/esmwg/NoahMP-Training], helping you run your first NoahMP simulation. Use the namelist, domain, input, restart files as an template for you own simulations.
+An example can be found in [https://github.com/esmwg/NoahMP-Example].
+
+The example helps you run your first NoahMP simulation. Use the example as an template of your own simulations.
 
 ## Porting
 
