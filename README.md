@@ -108,7 +108,7 @@ Fork this repository, code, and submit a pull request.
 Read the GitHub help page [https://help.github.com/articles/fork-a-repo] for more information.
 
 ## References
-Please cite the following paper in your publications:
+Please cite the following papers in your publications:
 - Niu, G.-Y., Yang, Z.-L., Mitchell, K. E., Chen, F., Ek, M. B., Barlage, M., Kumar, A., Manning, K., Niyogi, D., Rosero, E., Tewari, M., & Xia, Y. (2011). The community Noah land surface model with multiparameterization options (Noah-MP): 1. Model description and evaluation with local-scale measurements. _Journal of Geophysical Research: Atmospheres_, _116_(12), D12109. https://doi.org/10.1029/2010JD015139
 - Yang, Z.-L., Niu, G.-Y., Mitchell, K. E., Chen, F., Ek, M. B., Barlage, M., M., Lounguevergne, L., Manning, K., Niyogi, D., Tewari, M, & Xia, Y. (2011). The community Noah land surface model with multiparameterization options (Noah-MP): 2. Evaluation over global river basins. _Journal of Geophysical Research: Atmospheres_, _116_(D12), D12110. https://doi.org/10.1029/2010JD015140
 - Zheng, H., Yang, Z.-L., Lin, P., Wei, J., Wu, W.-Y., Li, L., Zhao, L., & Wang, S. (2019). On the sensitivity of the precipitation partitioning into evapotranspiration and runoff in land surface parameterizations. _Water Resources Research_, _55_(1), 95–111. https://doi.org/10.1029/2017WR022236
